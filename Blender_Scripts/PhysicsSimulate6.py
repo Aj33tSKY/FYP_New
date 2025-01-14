@@ -7,16 +7,18 @@ from math import atan, tan
   
 # Parameters
 num_renders = 5
-delta = 0  # # Parameters for scaling range, Range of scaling: [1 - delta, 1 + delta]
-num_blocks = 4 # Number of blocks in each arrangement
+delta = 0.3  # # Parameters for scaling range, Range of scaling: [1 - delta, 1 + delta]
+num_blocks = 10 # Number of blocks in each arrangement
 
 
 Stables = num_renders // 2
 Unstables = num_renders // 2
-output_folder1 = r"C:\Ajeet\FYP\OG_DS\Stable" #Stable Class
-output_folder2 = r"C:\Ajeet\FYP\OG_DS\Unstable" #Unstable Class
+output_folder1 = r"C:\Ajeet\FYP_code\OG_DS\10B-2D-Non_OG\Stable" #Stable Class
+output_folder2 = r"C:\Ajeet\FYP_code\OG_DS\10B-2D-Non_OG\Unstable" #Unstable Class
 uniform_y_coordinate = 0  # Set a uniform Y-coordinate for all blocks
 unique_arrangements = set()
+
+    
 
 # Set up the scene for orthographic 2D rendering
 def setup_scene():
@@ -40,16 +42,12 @@ def setup_scene():
     
     
 def create_block():
-  
-    # Generate random scaling factors
-    length_scale = random.uniform(1 - delta, 1 + delta)
-    width_scale = random.uniform(1 - delta, 1 + delta)
-
-    # Apply scaling to block dimensions
-    block_length = 3.0 * length_scale
-    block_width = 1.0 
-    block_height = 1.0 * width_scale
      
+    # Generate random scaling factors
+    scale = random.uniform(1 - delta, 1 + delta)
+    block_length = 3.0 * scale
+    block_width = 1.0 * scale
+    block_height = 1.0  * scale
     # Add a cube to the scene
     bpy.ops.mesh.primitive_cube_add(size=1)
     block = bpy.context.object
@@ -72,15 +70,11 @@ def create_block():
     return block, block_height_z, block_width_x
 
 def create_block_BIAS():
-
     # Generate random scaling factors
-    length_scale = random.uniform(1 - delta, 1 + delta)
-    width_scale = random.uniform(1 - delta, 1 + delta)
-
-    # Apply scaling to block dimensions
-    block_length = 3.0 * length_scale
-    block_width = 1.0 * width_scale
-    block_height = 1.0 
+    scale = random.uniform(1 - delta, 1 + delta)
+    block_length = 3.0 * scale
+    block_width = 1.0 * scale
+    block_height = 1.0 * scale
     
     # Add a cube to the scene
     bpy.ops.mesh.primitive_cube_add(size=1)
@@ -389,9 +383,13 @@ def render_scene(iteration, stability_status):
     else:
         raise ValueError("Unknown stability status: " + stability_status)
         
-        
-        
-
+    # Set the active camera
+    bpy.context.scene.camera = ortho_camera   
+    # Set the render filepath
+    bpy.context.scene.render.filepath = os.path.join(render_folder, f"render_{iteration:02d}.png") 
+    # Render the scene
+    bpy.ops.render.render(write_still=True)    
+'''
     for cam, cam_name in zip(cameras, camera_names):
         if cam is None:
             print(f"Warning: Camera '{cam_name}' is not found. Skipping render for this camera.")
@@ -406,7 +404,7 @@ def render_scene(iteration, stability_status):
         # Render the scene
         bpy.ops.render.render(write_still=True)   
 
-    
+'''    
     # Set the render filepath
     #bpy.context.scene.render.filepath = os.path.join(render_folder, f"render_{iteration:02d}.png")
 

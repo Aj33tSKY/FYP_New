@@ -1,0 +1,13 @@
+Results: Test set accuracy
+
+4B-2D-Uni: 96.0%
+10B-2D-Uni: 92.0%
+
+4B-2D-Non: 92.5%
+10B-2D-Non: 77.5%
+
+4B-3D-Uni: 96.5%
+10B-3D-Ui: 90.0%
+
+4B-3D-Non: 92.25%
+10B-3D-Non:73.5%
